@@ -21,6 +21,10 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
+import SmallWithNavigation from './SmallWithNavigation';
+import { Outlet } from 'react-router-dom';
+import { ColorModeSwitcher } from '../ColorModeSwitcher';
+import { NAV_ITEMS } from '../content/content';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -72,7 +76,8 @@ export default function WithSubnavigation() {
           direction={'row'}
           spacing={6}
         >
-          <Button
+          <ColorModeSwitcher />
+          {/* <Button
             as={'a'}
             fontSize={'sm'}
             fontWeight={400}
@@ -94,10 +99,11 @@ export default function WithSubnavigation() {
             }}
           >
             Sign Up
-          </Button>
+          </Button> */}
         </Stack>
       </Flex>
-
+      <Outlet />
+      <SmallWithNavigation />
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
@@ -257,44 +263,3 @@ const MobileNavItem = ({ label, children, href }) => {
     </Stack>
   );
 };
-
-const NAV_ITEMS = [
-  {
-    label: 'Inspiration',
-    children: [
-      {
-        label: 'Explore Design Work',
-        subLabel: 'Trending Design to inspire you',
-        href: '#',
-      },
-      {
-        label: 'New & Noteworthy',
-        subLabel: 'Up-and-coming Designers',
-        href: '#',
-      },
-    ],
-  },
-  {
-    label: 'Find Work',
-    children: [
-      {
-        label: 'Job Board',
-        subLabel: 'Find your dream design job',
-        href: '#',
-      },
-      {
-        label: 'Freelance Projects',
-        subLabel: 'An exclusive list for contract work',
-        href: '#',
-      },
-    ],
-  },
-  {
-    label: 'Learn Design',
-    href: '#',
-  },
-  {
-    label: 'Hire Designers',
-    href: '#',
-  },
-];

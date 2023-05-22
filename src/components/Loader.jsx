@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, VStack, Grid } from '@chakra-ui/react';
 import { RotatingTriangles } from 'react-loader-spinner';
-import { ColorModeSwitcher } from '../ColorModeSwitcher';
 
 const Loader = () => {
   return (

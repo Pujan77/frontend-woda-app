@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import {
   IconButton,
   Avatar,
@@ -14,8 +14,6 @@ import {
   DrawerContent,
   Text,
   useDisclosure,
-  BoxProps,
-  FlexProps,
   Menu,
   MenuButton,
   MenuDivider,
