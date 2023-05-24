@@ -1,4 +1,4 @@
-import { Donate, Events, Landing, Login, Subscriber } from '../pages';
+import { Complain, Donate, Events, Landing, Login, Subscriber } from '../pages';
 
 export const routingItems = [
   {
@@ -31,6 +31,12 @@ export const routingItems = [
     component: <Events />,
     exact: false,
   },
+  {
+    to: '/complain',
+    title: 'Complain',
+    component: <Complain />,
+    exact: false,
+  },
 ];
 
 export const NAV_ITEMS = [
@@ -57,5 +63,9 @@ export const NAV_ITEMS = [
   {
     label: 'Events',
     href: '/events',
+  },
+  {
+    label: 'Complain',
+    href: '/complain',
   },
 ];

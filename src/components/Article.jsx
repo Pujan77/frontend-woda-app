@@ -48,7 +48,7 @@ export const BlogAuthor = props => {
 };
 
 const ArticleList = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [nextPage, setNextPage] = useState(null);
   const [newsData, setNewsData] = useState([]);
   const loadNews = async param => {
@@ -56,6 +56,7 @@ const ArticleList = () => {
     let res = await getNewsAPI(param);
     if (res) {
       setNextPage(res.data.nextPage);
+      setLoading(false);
       setNewsData(res.data.results);
     }
   };
@@ -63,7 +64,7 @@ const ArticleList = () => {
     loadNews(`&country=np&language=ne&category=politics`);
   }, []);
   const loadingNewsArticle = () => {
-    if (newsData) {
+    if (newsData || loading === false) {
       return newsData.map((news, i) => {
         return (
           <div key={i}>
@@ -148,6 +149,8 @@ const ArticleList = () => {
           </div>
         );
       });
+    } else {
+      return <Loader />;
     }
   };
   return (
