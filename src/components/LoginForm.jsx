@@ -13,11 +13,19 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
+import { useError, useResponse } from '../context/ErrorContext';
+import { useContext } from 'react';
+import AuthContext from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+
 export default function LoginForm() {
+  const { showError } = useError();
+  const { showSuccess } = useResponse();
+  const { loginUser } = useContext(AuthContext);
+  let navigate = useNavigate();
   const initialValues = {
     email: '',
     password: '',
-    rememberMe: false,
   };
 
   const validate = values => {
@@ -36,11 +44,18 @@ export default function LoginForm() {
     return errors;
   };
 
-  const handleSubmit = (values, { setSubmitting }) => {
-    setTimeout(() => {
-      console.log(values);
-      setSubmitting(false);
-    }, 400);
+  const handleSubmit = async (values, { setSubmitting }) => {
+    setSubmitting(true);
+    try {
+      let res = await loginUser(values);
+      if (res) {
+        showSuccess(res.data.message);
+        setSubmitting(false);
+        navigate('/user/welcome');
+      }
+    } catch (error) {
+      showError(error?.response?.data ? error.response.data : 'Not authorized');
+    }
   };
 
   return (
@@ -90,13 +105,6 @@ export default function LoginForm() {
                     )}
                   </Field>
                   <Stack spacing={10}>
-                    <Stack
-                      direction={{ base: 'column', sm: 'row' }}
-                      align={'start'}
-                      justify={'space-between'}
-                    >
-                      <Link color={'blue.400'}>Forgot password?</Link>
-                    </Stack>
                     <Button
                       type="submit"
                       bg={'blue.400'}

@@ -1,32 +1,43 @@
 import React from 'react';
-import { ChakraProvider, Box, VStack, Grid, theme } from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Loader } from './components';
-import { Landing } from './pages';
+import { ChakraProvider, theme } from '@chakra-ui/react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { routingItems } from './content/content';
 import SidebarWithHeader from './layout/SidebarWithHeader';
 import WithSubnavigation from './layout/Simple';
 import { ErrorProvider } from './context/ErrorContext';
+import { AuthProvider } from './context/AuthContext';
+import PrivateRoute from './routes/PrivateRoute';
+import { Welcome } from './pages';
 function App() {
   return (
     <ChakraProvider theme={theme}>
       <ErrorProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<WithSubnavigation />}>
-              {routingItems.map(nav => (
-                <Route
-                  key={nav.title}
-                  path={nav.to}
-                  exact={nav.exact}
-                  element={nav.component}
-                />
-              ))}
-            </Route>
-            <Route path="/user" element={<SidebarWithHeader />} />
-          </Routes>{' '}
-        </BrowserRouter>
+        <AuthProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<WithSubnavigation />}>
+                {routingItems.map(nav => (
+                  <Route
+                    key={nav.title}
+                    path={nav.to}
+                    exact={nav.exact}
+                    element={nav.component}
+                  />
+                ))}
+              </Route>
+              <Route
+                path="/user"
+                element={
+                  <PrivateRoute>
+                    <SidebarWithHeader />
+                  </PrivateRoute>
+                }
+              >
+                <Route path="/user/welcome" element={<Welcome />} />
+              </Route>
+            </Routes>{' '}
+          </BrowserRouter>
+        </AuthProvider>
       </ErrorProvider>
     </ChakraProvider>
   );

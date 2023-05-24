@@ -1,7 +1,7 @@
 import React from 'react';
-import { ArticleList, Hero } from '../components';
+import { ArticleList, EventListing, Hero } from '../components';
 import { useError, useResponse } from '../context/ErrorContext';
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Heading } from '@chakra-ui/react';
 
 const Landing = () => {
   const { showError } = useError();
@@ -26,16 +26,9 @@ const Landing = () => {
       {/* <button onClick={handleButtonClick}>Trigger Error</button> */}
       <Hero />
       <Flex align={'center'} justify={'center'}>
-        <Box
-          rounded={'lg'}
-          boxShadow={'lg'}
-          p={8}
-          flex={1}
-          maxH={'100em'}
-          overflowY={'auto'}
-        >
-          {/* Content for the first column */}
-          {/* Add your content here */}
+        <Box p={8} flex={1}>
+          <Heading>Notices:</Heading>
+          <EventListing />
         </Box>
         <Box
           rounded={'lg'}

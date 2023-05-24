@@ -14,6 +14,7 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  Image,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
@@ -25,6 +26,7 @@ import SmallWithNavigation from './SmallWithNavigation';
 import { Outlet } from 'react-router-dom';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import { NAV_ITEMS } from '../content/content';
+import { LogoWoda } from '../assets';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -57,24 +59,18 @@ export default function WithSubnavigation() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <Text
-            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-            fontFamily={'heading'}
-            color={useColorModeValue('gray.800', 'white')}
+          <Link
+            p={2}
+            href="/"
+            fontSize={'sm'}
+            fontWeight={500}
+            _hover={{
+              textDecoration: 'none',
+              color: 'grey',
+            }}
           >
-            <Link
-              p={2}
-              href="/"
-              fontSize={'sm'}
-              fontWeight={500}
-              _hover={{
-                textDecoration: 'none',
-                color: 'grey',
-              }}
-            >
-              Logo
-            </Link>
-          </Text>
+            <Image width={'80px'} src={LogoWoda} alt="logo" />
+          </Link>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />

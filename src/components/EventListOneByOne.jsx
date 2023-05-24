@@ -2,10 +2,11 @@ import { Box, Button, Stack, Text, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 import { formatDate, formatDateTime } from '../utils';
 import EventModal from './EventModal';
+import { useLocation } from 'react-router-dom';
 
 const EventListOneByOne = ({ event, key }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const location = useLocation();
   return (
     <>
       <Stack p="4" boxShadow="lg" m="4" borderRadius="sm">
@@ -23,12 +24,13 @@ const EventListOneByOne = ({ event, key }) => {
             maxW={'4xl'}
             dangerouslySetInnerHTML={{ __html: event.viewPage }}
           ></Box>
-
-          <Stack direction={{ base: 'column', md: 'row' }}>
-            <Button onClick={onOpen} colorScheme="green">
-              Participate
-            </Button>
-          </Stack>
+          {location.pathname === '/events' && (
+            <Stack direction={{ base: 'column', md: 'row' }}>
+              <Button onClick={onOpen} colorScheme="green">
+                Participate
+              </Button>
+            </Stack>
+          )}
         </Stack>
         <Stack
           direction={{ base: 'column', md: 'row' }}

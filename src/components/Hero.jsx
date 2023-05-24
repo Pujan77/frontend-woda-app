@@ -42,14 +42,6 @@ export default function Hero() {
             >
               हाम्रा सेवाहरू
             </Button>
-            <Button
-              bg={'whiteAlpha.300'}
-              rounded={'full'}
-              color={'white'}
-              _hover={{ bg: 'whiteAlpha.500' }}
-            >
-              हाम्रा सेवाहरू
-            </Button>
           </Stack>
         </Stack>
       </VStack>
