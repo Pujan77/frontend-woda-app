@@ -6,6 +6,8 @@ import LoginForm from './LoginForm';
 import CheckoutBT from './Checkout';
 import BraintreeDropIn from './Braintree';
 import EventListing from './EventListing';
+import PublishNoticeForm from './PublishNoticeForm';
+import ComplainViewComponent from './ComplainViewComponent';
 
 export {
   Loader,
@@ -16,4 +18,6 @@ export {
   CheckoutBT,
   BraintreeDropIn,
   EventListing,
+  PublishNoticeForm,
+  ComplainViewComponent,
 };

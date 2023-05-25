@@ -1,11 +1,13 @@
 import { Box, Button, Stack, Text, useDisclosure } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext } from 'react';
 import { formatDate, formatDateTime } from '../utils';
 import EventModal from './EventModal';
 import { useLocation } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
 
-const EventListOneByOne = ({ event, key }) => {
+const EventListOneByOne = ({ event }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { user } = useContext(AuthContext);
   const location = useLocation();
   return (
     <>
@@ -31,6 +33,13 @@ const EventListOneByOne = ({ event, key }) => {
               </Button>
             </Stack>
           )}
+          {location.pathname === '/user/notices' && user ? (
+            <Stack direction={{ base: 'column', md: 'row' }}>
+              <Button onClick={onOpen} colorScheme="green">
+                View Participants
+              </Button>
+            </Stack>
+          ) : null}
         </Stack>
         <Stack
           direction={{ base: 'column', md: 'row' }}

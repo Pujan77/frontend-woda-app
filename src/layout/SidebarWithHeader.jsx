@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   IconButton,
   Avatar,
@@ -16,28 +16,29 @@ import {
   useDisclosure,
   Menu,
   MenuButton,
-  MenuDivider,
   MenuItem,
   MenuList,
+  Image,
 } from '@chakra-ui/react';
 import {
   FiHome,
-  FiTrendingUp,
-  FiCompass,
-  FiStar,
+  FiMessageCircle,
+  FiDollarSign,
+  FiFrown,
   FiSettings,
   FiMenu,
-  FiBell,
   FiChevronDown,
 } from 'react-icons/fi';
 import { Outlet } from 'react-router-dom';
+import { LogoWoda } from '../assets';
+import AuthContext from '../context/AuthContext';
+import { ColorModeSwitcher } from '../ColorModeSwitcher';
 
 const LinkItems = [
-  { name: 'Home', icon: FiHome },
-  { name: 'Trending', icon: FiTrendingUp },
-  { name: 'Explore', icon: FiCompass },
-  { name: 'Favourites', icon: FiStar },
-  { name: 'Settings', icon: FiSettings },
+  { name: 'Home', icon: FiHome, href: '/user/welcome' },
+  { name: 'Notices', icon: FiMessageCircle, href: '/user/notices' },
+  { name: 'Donations', icon: FiDollarSign, href: '/user/donations' },
+  { name: 'Complaints', icon: FiFrown, href: '/user/complaints' },
 ];
 
 export default function SidebarWithHeader() {
@@ -84,12 +85,12 @@ const SidebarContent = ({ onClose, ...rest }) => {
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
+          <Image width={'80px'} src={LogoWoda} alt="logo" />
         </Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map(link => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} href={link.href} icon={link.icon}>
           {link.name}
         </NavItem>
       ))}
@@ -97,10 +98,10 @@ const SidebarContent = ({ onClose, ...rest }) => {
   );
 };
 
-const NavItem = ({ icon, children, ...rest }) => {
+const NavItem = ({ icon, href, children, ...rest }) => {
   return (
     <Link
-      href="#"
+      href={href}
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}
     >
@@ -134,6 +135,8 @@ const NavItem = ({ icon, children, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
+  const { user, logoutUser } = useContext(AuthContext);
+
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -160,28 +163,25 @@ const MobileNav = ({ onOpen, ...rest }) => {
         fontFamily="monospace"
         fontWeight="bold"
       >
-        Logo
+        <Image width={'80px'} src={LogoWoda} alt="logo" />
       </Text>
 
       <HStack spacing={{ base: '0', md: '6' }}>
-        <IconButton
-          size="lg"
-          variant="ghost"
-          aria-label="open menu"
-          icon={<FiBell />}
-        />
         <Flex alignItems={'center'}>
           <Menu>
+            {' '}
+            <ColorModeSwitcher />
             <MenuButton
               py={2}
               transition="all 0.3s"
               _focus={{ boxShadow: 'none' }}
             >
+              {' '}
               <HStack>
                 <Avatar
                   size={'sm'}
                   src={
-                    'https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                    'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'
                   }
                 />
                 <VStack
@@ -190,7 +190,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">Justina Clark</Text>
+                  <Text fontSize="sm">
+                    {user.firstName} {user.lastName}
+                  </Text>
                   <Text fontSize="xs" color="gray.600">
                     Admin
                   </Text>
@@ -204,11 +206,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
               bg={useColorModeValue('white', 'gray.900')}
               borderColor={useColorModeValue('gray.200', 'gray.700')}
             >
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
-              <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem onClick={logoutUser}>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>

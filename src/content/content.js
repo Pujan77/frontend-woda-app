@@ -1,4 +1,15 @@
-import { Complain, Donate, Events, Landing, Login, Subscriber } from '../pages';
+import {
+  Complain,
+  ComplaintView,
+  Donate,
+  Donations,
+  Events,
+  Landing,
+  Login,
+  Notices,
+  Subscriber,
+  Welcome,
+} from '../pages';
 
 export const routingItems = [
   {
@@ -38,7 +49,32 @@ export const routingItems = [
     exact: false,
   },
 ];
-
+export const routingItemsPrivate = [
+  {
+    to: '/user/welcome',
+    title: 'Welcome',
+    component: <Welcome />,
+    exact: false,
+  },
+  {
+    to: '/user/notices',
+    title: 'Notices',
+    component: <Notices />,
+    exact: false,
+  },
+  {
+    to: '/user/donations',
+    title: 'Donations',
+    component: <Donations />,
+    exact: false,
+  },
+  {
+    to: '/user/complaints',
+    title: 'ComplaintView',
+    component: <ComplaintView />,
+    exact: false,
+  },
+];
 export const NAV_ITEMS = [
   {
     label: 'Get Connected',

@@ -1,5 +1,6 @@
 import { createContext, useState } from 'react';
 import { loginAPI } from '../services/authAPI';
+import { useResponse } from './ErrorContext';
 
 const AuthContext = createContext();
 
@@ -20,7 +21,7 @@ export const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(() =>
     localStorage.getItem('authTokens') ? true : false
   );
-
+  const { showSuccess } = useResponse();
   let loginUser = async e => {
     let body = {
       email: e.email,
@@ -49,6 +50,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     setLoggedIn(false);
     localStorage.clear();
+    showSuccess('Logged Out Successfully.');
   };
 
   let contextData = {
